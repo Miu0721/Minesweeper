@@ -11,7 +11,6 @@
 * 戻り値：int 0
 *
 * 作成日:2024/07/18
-* 作成者:浦野 稚南美
 *
 *********************************************************************/
 #include "game.h"
@@ -434,7 +433,6 @@ int startGame( void )
 * 戻り値：なし
 *
 * 作成日:2024/07/10
-* 作成者:秋山 克成
 *
 *********************************************************************/
 void getTime(char *buffer, int size)
@@ -463,7 +461,6 @@ void getTime(char *buffer, int size)
 * 戻り値：int 0 , 1
 *
 * 作成日:2024/07/10
-* 作成者:浦野 稚南美
 *
 *********************************************************************/
 int orderFirst(void) {
@@ -498,7 +495,6 @@ int orderFirst(void) {
 * 戻り値：なし
 * 
 * 作成日:2024/07/12
-* 作成者:秋山 克成
 *
 *********************************************************************/
 void makeFile(char* server_name, char* client_name, int my_score, int other_score, char* dateTime)
@@ -583,3 +579,4 @@ void makeFile(char* server_name, char* client_name, int my_score, int other_scor
 	
     return;
 }
+
