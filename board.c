@@ -5,7 +5,6 @@
 *
 * 
 * 作成日:2024/07/10
-* 作成者:秋山 克成 / 浦野 稚南美
 *
 *********************************************************************/
 
@@ -192,4 +191,5 @@ int chooseCell( int board[SIZE][SIZE], int bombs[SIZE][SIZE], int open[SIZE][SIZ
         return points;
     }
 }
+
 
