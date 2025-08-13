@@ -11,7 +11,6 @@
 * 戻り値：int 0
 *
 * 作成日:2024/07/18
-* 作成者:浦野 稚南美
 *
 *********************************************************************/
 #ifndef GAME_H
@@ -44,5 +43,6 @@ void makeFile( char* server_name , char* client_name ,
 					int my_score , int other_score , char* dataTime);		/* 対戦履歴(結果ファイル)編集用関数 */
 
 #endif
+
 
 
