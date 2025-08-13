@@ -1,8 +1,8 @@
-# Makefile
+# Makefile (flat layout)
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -MMD -MP
 
-# あなたの実ファイル名に合わせてここを調整
+# ⬇️ EDIT these to match your files in the repo root
 COMMON_SRCS := board.c clearBuffer.c net.c
 SERVER_SRCS := server.c game.c $(COMMON_SRCS)
 CLIENT_SRCS := client.c $(COMMON_SRCS)
@@ -26,4 +26,3 @@ clean:
 	rm -f $(SERVER_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d)
 
 -include $(SERVER_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d)
-
