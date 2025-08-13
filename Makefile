@@ -1,41 +1,29 @@
-# コンパイラとフラグの設定
-# 変数　＝　value
-CC = gcc								# コンパイル方法
-CFLAGS = -Wall -g
-INCLUDE = -Icommon -Iserver -Iclient
+# Makefile
+CC = gcc
+CFLAGS = -Wall -Wextra -O2 -MMD -MP
 
-# ディレクトリの定義
-COMMON_DIR = common
-SERVER_DIR = server
-CLIENT_DIR = client
+# あなたの実ファイル名に合わせてここを調整
+COMMON_SRCS := board.c clearBuffer.c net.c
+SERVER_SRCS := server.c game.c $(COMMON_SRCS)
+CLIENT_SRCS := client.c $(COMMON_SRCS)
 
-# 共通ファイル
-COMMON_SRCS = $(COMMON_DIR)/board.c $(COMMON_DIR)/clearBuffer.c $(COMMON_DIR)/net.c
-COMMON_OBJS = $(COMMON_SRCS:.c=.o)
+SERVER_OBJS := $(SERVER_SRCS:.c=.o)
+CLIENT_OBJS := $(CLIENT_SRCS:.c=.o)
 
-# サーバーファイル
-SERVER_SRCS = $(SERVER_DIR)/game.c $(SERVER_DIR)/server.c
-SERVER_OBJS = $(SERVER_SRCS:.c=.o)
-
-# クライアントファイル
-CLIENT_SRCS = $(CLIENT_DIR)/client.c
-CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)
-
-# ターゲットの定義
 all: myserver myclient
 
-myserver: $(COMMON_OBJS) $(SERVER_OBJS)
-	$(CC) $(CFLAGS) -o myserver $(COMMON_OBJS) $(SERVER_OBJS)
+myserver: $(SERVER_OBJS)
+	$(CC) $(CFLAGS) -o $@ $(SERVER_OBJS)
 
-myclient: $(COMMON_OBJS) $(CLIENT_OBJS)
-	$(CC) $(CFLAGS) -o myclient $(COMMON_OBJS) $(CLIENT_OBJS)
+myclient: $(CLIENT_OBJS)
+	$(CC) $(CFLAGS) -o $@ $(CLIENT_OBJS)
 
-# オブジェクトファイルのルール
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# クリーンアップのルール
 clean:
-	rm -f $(COMMON_OBJS) $(SERVER_OBJS) $(CLIENT_OBJS) myserver myclient
+	rm -f $(SERVER_OBJS) $(CLIENT_OBJS) myserver myclient
+	rm -f $(SERVER_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d)
 
-.PHONY: all clean
+-include $(SERVER_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d)
+
