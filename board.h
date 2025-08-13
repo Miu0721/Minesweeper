@@ -5,7 +5,6 @@
 *
 * 
 * 作成日:2024/07/10
-* 作成者:秋山 克成 / 浦野 稚南美
 *
 *********************************************************************/
 #ifndef BOARD_H		// BOARD_Hが未定義なら↓
@@ -25,4 +24,5 @@ void displayBoard( int board[SIZE][SIZE], int bombs[SIZE][SIZE], int open[SIZE][
 int chooseCell( int board[SIZE][SIZE], int bombs[SIZE][SIZE], int open[SIZE][SIZE], int x, int y );
 
 #endif // BOARD_H
+
 
