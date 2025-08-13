@@ -1,8 +1,9 @@
-# Makefile (flat layout)
+# いま使っている Makefile を上書き（フラット用）
+cat > Makefile << 'MAKE'
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -MMD -MP
 
-# ⬇️ EDIT these to match your files in the repo root
+# ファイル構成（←あなたの ls に合わせ済み）
 COMMON_SRCS := board.c clearBuffer.c net.c
 SERVER_SRCS := server.c game.c $(COMMON_SRCS)
 CLIENT_SRCS := client.c $(COMMON_SRCS)
@@ -10,6 +11,7 @@ CLIENT_SRCS := client.c $(COMMON_SRCS)
 SERVER_OBJS := $(SERVER_SRCS:.c=.o)
 CLIENT_OBJS := $(CLIENT_SRCS:.c=.o)
 
+.PHONY: all clean
 all: myserver myclient
 
 myserver: $(SERVER_OBJS)
@@ -26,3 +28,5 @@ clean:
 	rm -f $(SERVER_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d)
 
 -include $(SERVER_OBJS:.o=.d) $(CLIENT_OBJS:.o=.d)
+MAKE
+
