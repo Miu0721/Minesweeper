@@ -1,0 +1,54 @@
+/****************************************************************************************
+*
+* Makefileはファイルの依存関係やコンパイルオプションを定義してコマンド入力で
+* コンパイルを行う実行ファイルです。
+* 例）手入力コマンド    ：gcc -I ../head -o server menu.c 
+*          ↓
+*Makefile定義コマンド   ：make
+*
+*****************************************************************************************/
+
+# コンパイラとフラグの設定
+CC = gcc								# コンパイル方法
+CFLAGS = -Wall -g						# コンパイルオプション(-Wallはすべての警告を表示、-gはデバック情報の生成)
+INCLUDE = -Icommon -Iserver -Iclient	# ｲﾝｸﾙｰﾄﾞﾃﾞｨﾚｸﾄﾘの指定(-Iでｲﾝｸﾙｰﾄﾞﾃﾞｨﾚｸﾄﾘの指定、common/server/clientを指定)
+
+# ディレクトリの定義(対象ディレクトリをoo_DIR変数に格納)
+COMMON_DIR = common 
+SERVER_DIR = server
+CLIENT_DIR = client
+
+# 共通ファイル(対象ディレクトリ配下のソースコードをoo_SRCSにすべて格納)
+COMMON_SRCS = $(COMMON_DIR)/board.c $(COMMON_DIR)/clearBuffer.c $(COMMON_DIR)/net.c
+COMMON_OBJS = $(COMMON_SRCS:.c=.o)			# oo_SRCSに格納された.c拡張子を.oに置き換える
+
+# サーバーファイル
+SERVER_SRCS = $(SERVER_DIR)/game.c $(SERVER_DIR)/server.c
+SERVER_OBJS = $(SERVER_SRCS:.c=.o)			# oo_SRCSに格納された.c拡張子を.oに置き換える
+
+# クライアントファイル
+CLIENT_SRCS = $(CLIENT_DIR)/client.c
+CLIENT_OBJS = $(CLIENT_SRCS:.c=.o)			# oo_SRCSに格納された.c拡張子を.oに置き換える
+
+
+# ターゲットの定義（ビルドを行う）
+all: clean myserver myclient		# ターゲット名
+
+# $(共通ディレクトリ)　$(serverディレクトリ) $(コンパイル方法) $(コンパイルオプション) -o ビルド名 $(共通ディレクトリ) $(serverディレクトリ)
+myserver: $(COMMON_OBJS) $(SERVER_OBJS)
+	$(CC) $(CFLAGS) -o myserver $(COMMON_OBJS) $(SERVER_OBJS)
+
+# $(共通ディレクトリ)　$(clientディレクトリ) $(コンパイル方法) $(コンパイルオプション) -o ビルド名 $(共通ディレクトリ) $(clientディレクトリ)
+myclient: $(COMMON_OBJS) $(CLIENT_OBJS)
+	$(CC) $(CFLAGS) -o myclient $(COMMON_OBJS) $(CLIENT_OBJS)
+
+
+# オブジェクトファイルのルール(.cを.oにコンパイルする方法の定義)
+%.o: %.c									# "$<"は依存ファイル(.cファイル)を示す、"$@"はターゲットファイル(.oファイル)を示す
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@		
+
+# クリーンアップのルール(生成したオブジェクトファイルと実行ファイルを削除する定義)
+clean:			# -fコマンド(強制削除実行、ファイルがない場合、削除の確認を無視する)　rm→removeのことlinux削除コマンド
+	rm -f $(COMMON_OBJS) $(SERVER_OBJS) $(CLIENT_OBJS) myserver myclient
+
+.PHONY: all clean			# .PHONYは'all'と'clean'がファイル名ではなく、ターゲット名であることをMakeに伝える
