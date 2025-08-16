@@ -1,5 +1,5 @@
 # Minesweeper
-game created using C#
+game created using C
 
 Minesweeper is a logic puzzle video game genre generally played on personal computers. The game features a grid of clickable tiles, with hidden "mines" dispersed throughout the board.
 
