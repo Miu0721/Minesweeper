@@ -3,7 +3,7 @@ game created using C
 
 Minesweeper is a logic puzzle video game genre generally played on personal computers. The game features a grid of clickable tiles, with hidden "mines" dispersed throughout the board.
 
-To play a game, 
+To play a game, 　
 
 1. go to the codeplace
 2. create two terminals
